@@ -98,7 +98,7 @@ var (
 
 // Show
 %token <empty> SHOW
-%token <empty> DATABASES TABLES PROXY
+%token <empty> DATABASES TABLES PROXY VARIABLES
 
 // DDL Tokens
 %token <empty> CREATE ALTER DROP RENAME
@@ -289,6 +289,10 @@ show_statement:
   SHOW DATABASES like_or_where_opt 
   {
     $$ = &Show{Section: "databases", LikeOrWhere: $3}
+  }
+| SHOW VARIABLES like_or_where_opt 
+  {
+    $$ = &Show{Section: "variables", LikeOrWhere: $3}
   }
 | SHOW TABLES from_opt like_or_where_opt 
   {
